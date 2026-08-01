@@ -27,8 +27,11 @@ Perception:
   lovelace-background: "radial-gradient(1200px circle at 18% 12%, #212125 0%, #0c0c0e 55%, #000000 100%) fixed"
   primary-background-color: "#0a0a0b"
   secondary-background-color: "#111113"
-  card-background-color: "rgba(255, 255, 255, 0.06)"
-  ha-card-background: "rgba(255, 255, 255, 0.06)"
+  card-background-color: "rgba(255, 255, 255, 0.16)"
+  ha-card-background: "rgba(255, 255, 255, 0.16)"
+  # Darken the backdrop behind more-info dialogs so the wallpaper/gradient
+  # showing through isn't distracting when a dialog opens.
+  mdc-dialog-scrim-color: "rgba(0, 0, 0, 0.72)"
 
   # ------------------------------------------------------------------- header
   app-header-background-color: "transparent"
@@ -36,10 +39,10 @@ Perception:
   app-header-selection-bar-color: "rgba(255, 255, 255, 0.85)"
 
   # -------------------------------------------------------------- card shape
-  ha-card-border-radius: "22px"
-  ha-card-border-color: "rgba(255, 255, 255, 0.14)"
-  ha-card-border-width: "1px"
-  ha-card-box-shadow: "0 8px 30px rgba(0, 0, 0, 0.45)"
+  ha-card-border-radius: "24px"
+  ha-card-border-color: "rgba(255, 255, 255, 0.28)"
+  ha-card-border-width: "1.5px"
+  ha-card-box-shadow: "0 12px 40px rgba(0, 0, 0, 0.55)"
 
   # ------------------------------------------------- controls / icons / state
   paper-item-icon-color: "rgba(255, 255, 255, 0.72)"
@@ -57,12 +60,19 @@ Perception:
   card-mod-theme: Perception
   card-mod-card: |
     ha-card {
-      background: rgba(255, 255, 255, 0.06) !important;
-      backdrop-filter: blur(22px) saturate(150%);
-      -webkit-backdrop-filter: blur(22px) saturate(150%);
-      border: 1px solid rgba(255, 255, 255, 0.14) !important;
-      border-radius: 22px;
+      /* Higher-opacity frosted "liquid glass": far less see-through, with a
+         thick specular edge so it reads as a solid pane of glass. */
+      background:
+        linear-gradient(135deg,
+          rgba(255, 255, 255, 0.22) 0%,
+          rgba(255, 255, 255, 0.13) 100%) !important;
+      backdrop-filter: blur(30px) saturate(180%);
+      -webkit-backdrop-filter: blur(30px) saturate(180%);
+      border: 1.5px solid rgba(255, 255, 255, 0.30) !important;
+      border-radius: 24px;
       box-shadow:
-        0 8px 30px rgba(0, 0, 0, 0.45),
-        inset 0 1px 0 rgba(255, 255, 255, 0.10);
+        0 12px 40px rgba(0, 0, 0, 0.55),           /* deep drop → panel floats */
+        inset 0 1.5px 0 rgba(255, 255, 255, 0.45), /* bright top lip highlight */
+        inset 0 -1px 1px rgba(0, 0, 0, 0.25),      /* shaded bottom edge */
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08); /* faint inner ring */
     }
