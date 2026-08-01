@@ -1,0 +1,68 @@
+# Glassmorphic — a near-black-and-white "glass" theme for Home Assistant.
+#
+# Requires the card-mod frontend plugin (install via HACS). The card-mod-card
+# block below applies the frosted-glass effect to EVERY card automatically,
+# so your dashboard YAML can stay clean.
+#
+# Install: drop this file in <config>/themes/, ensure configuration.yaml has
+#   frontend:
+#     themes: !include_dir_merge_named themes
+# then restart HA and pick "Glassmorphic" (Profile → Theme, or per-view `theme:`).
+
+Glassmorphic:
+  # ------------------------------------------------------------------ palette
+  # Deliberately tiny palette: black, white, and translucent whites only.
+  primary-color: "#e9e9ec"            # subtle "brand" accent (kept near-white)
+  accent-color: "#ffffff"
+  primary-text-color: "rgba(255, 255, 255, 0.92)"
+  secondary-text-color: "rgba(255, 255, 255, 0.58)"
+  disabled-text-color: "rgba(255, 255, 255, 0.32)"
+  text-primary-color: "rgba(255, 255, 255, 0.92)"
+  divider-color: "rgba(255, 255, 255, 0.10)"
+
+  # -------------------------------------------------------------- backgrounds
+  # A dark, almost-black gradient gives the glass something to blur against.
+  # Swap the gradient for `url('/local/wallpaper.jpg') center/cover fixed` to
+  # blur a real photo instead.
+  lovelace-background: "radial-gradient(1200px circle at 18% 12%, #212125 0%, #0c0c0e 55%, #000000 100%) fixed"
+  primary-background-color: "#0a0a0b"
+  secondary-background-color: "#111113"
+  card-background-color: "rgba(255, 255, 255, 0.06)"
+  ha-card-background: "rgba(255, 255, 255, 0.06)"
+
+  # ------------------------------------------------------------------- header
+  app-header-background-color: "transparent"
+  app-header-text-color: "rgba(255, 255, 255, 0.92)"
+  app-header-selection-bar-color: "rgba(255, 255, 255, 0.85)"
+
+  # -------------------------------------------------------------- card shape
+  ha-card-border-radius: "22px"
+  ha-card-border-color: "rgba(255, 255, 255, 0.14)"
+  ha-card-border-width: "1px"
+  ha-card-box-shadow: "0 8px 30px rgba(0, 0, 0, 0.45)"
+
+  # ------------------------------------------------- controls / icons / state
+  paper-item-icon-color: "rgba(255, 255, 255, 0.72)"
+  state-icon-color: "rgba(255, 255, 255, 0.85)"
+  state-icon-active-color: "#ffffff"
+  switch-checked-color: "#ffffff"
+  switch-unchecked-color: "rgba(255, 255, 255, 0.30)"
+  slider-color: "rgba(255, 255, 255, 0.85)"
+  slider-track-color: "rgba(255, 255, 255, 0.12)"
+  # Tile / feature controls
+  feature-button-background-color: "rgba(255, 255, 255, 0.10)"
+
+  # --------------------------------------------------- the glass (card-mod)
+  # This name MUST match the theme name above for card-mod to activate it.
+  card-mod-theme: Glassmorphic
+  card-mod-card: |
+    ha-card {
+      background: rgba(255, 255, 255, 0.06) !important;
+      backdrop-filter: blur(22px) saturate(150%);
+      -webkit-backdrop-filter: blur(22px) saturate(150%);
+      border: 1px solid rgba(255, 255, 255, 0.14) !important;
+      border-radius: 22px;
+      box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.10);
+    }

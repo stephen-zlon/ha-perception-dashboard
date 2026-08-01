@@ -1,0 +1,113 @@
+# Glass Home — a sample glassmorphic Home Assistant dashboard.
+#
+# HOW TO USE
+#   Option A (quick preview): open any dashboard → ⋮ → "Edit dashboard" →
+#     ⋮ → "Raw configuration editor" → paste the `views:` block below.
+#   Option B (YAML dashboard): reference this file from configuration.yaml:
+#       lovelace:
+#         dashboards:
+#           glass-home:
+#             mode: yaml
+#             filename: dashboards/glass-home.yaml
+#             title: Glass Home
+#             icon: mdi:cube-outline
+#             show_in_sidebar: true
+#
+# REQUIRES: card-mod (HACS) + the "Glassmorphic" theme (themes/glassmorphic.yaml).
+# The frosted-glass look comes from the theme, so the cards below stay plain.
+#
+# Replace every entity id (light.*, sensor.*, weather.*, media_player.*) with
+# your own — these are common sample names and won't all exist on your system.
+
+title: Glass Home
+views:
+  - title: Home
+    path: home
+    theme: Glassmorphic          # applies the glass look to this view
+    type: sections
+    max_columns: 3
+    sections:
+      # --------------------------------------------------------- Overview
+      - type: grid
+        cards:
+          - type: markdown
+            content: >
+              # {{ now().strftime('%H:%M') }}
+
+              #### {{ now().strftime('%A, %-d %B %Y') }}
+            card_mod:
+              style: |
+                ha-card {
+                  text-align: center;
+                  padding: 14px 0 6px 0;
+                }
+                ha-card h1 {
+                  font-size: 3.6em;
+                  font-weight: 200;
+                  letter-spacing: 3px;
+                  margin: 0;
+                }
+                ha-card h4 {
+                  font-weight: 300;
+                  letter-spacing: 1px;
+                  color: rgba(255,255,255,0.60);
+                  margin: 2px 0 0 0;
+                }
+          - type: weather-forecast
+            entity: weather.home
+            forecast_type: daily
+            show_current: true
+            show_forecast: true
+
+      # ----------------------------------------------------------- Lights
+      - type: grid
+        cards:
+          - type: heading
+            heading: Lights
+            heading_style: title
+            icon: mdi:lightbulb-group-outline
+          - type: tile
+            entity: light.living_room
+            name: Living Room
+            features:
+              - type: light-brightness
+          - type: tile
+            entity: light.kitchen
+            name: Kitchen
+            features:
+              - type: light-brightness
+          - type: tile
+            entity: light.bedroom
+            name: Bedroom
+
+      # ---------------------------------------------------------- Climate
+      - type: grid
+        cards:
+          - type: heading
+            heading: Climate & Home
+            heading_style: title
+            icon: mdi:home-thermometer-outline
+          - type: tile
+            entity: sensor.living_room_temperature
+            name: Temperature
+            icon: mdi:thermometer
+          - type: tile
+            entity: sensor.living_room_humidity
+            name: Humidity
+            icon: mdi:water-percent
+          - type: tile
+            entity: binary_sensor.front_door
+            name: Front Door
+          - type: tile
+            entity: person.me
+            name: Presence
+
+      # ------------------------------------------------------------ Media
+      - type: grid
+        cards:
+          - type: heading
+            heading: Media
+            heading_style: title
+            icon: mdi:play-circle-outline
+          - type: media-control
+            entity: media_player.living_room
