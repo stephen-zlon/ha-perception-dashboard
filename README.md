@@ -13,6 +13,7 @@ rounded corners, and translucent whites over a dark background.
 |------|------------|
 | `themes/perception.yaml` | The theme. Sets the palette + background and applies the frosted‑glass effect to every card via card‑mod. |
 | `dashboards/perception.yaml` | A sample dashboard (clock, weather, lights, climate, media) using core cards. |
+| `www/perception/InterVariable.woff2` | The bundled, self‑hosted **Inter** variable font (all weights in one file), served at `/local/`. |
 | `hacs.json` | Lets HACS install the **theme** straight from this repo. |
 
 ## Requirements
@@ -21,6 +22,8 @@ rounded corners, and translucent whites over a dark background.
 - **[card-mod](https://github.com/thomasloven/lovelace-card-mod)** — the frontend
   plugin that injects the blur/transparency CSS. Glassmorphism is **not** possible
   with core cards alone, so this is mandatory. Install it from HACS (default store).
+- **Inter font (bundled, self‑hosted).** No internet needed at runtime — you copy
+  one `.woff2` into `config/www/perception/` during install (steps below).
 
 ---
 
@@ -39,7 +42,11 @@ to the repo).
    paste your repo URL → **Category: Theme** → **Add**.
 3. Find **Perception Theme** in HACS → **Download**. This copies
    `themes/perception.yaml` into your `config/themes/` folder for you.
-4. Continue to [Enable the theme](#enable-the-theme) and
+4. **Install the font** (HACS copies only the theme file): create
+   `config/www/perception/` and put **`InterVariable.woff2`** in it — grab it from
+   this repo's `www/perception/` folder. HA serves it at
+   `/local/perception/InterVariable.woff2`, which the theme references.
+5. Continue to [Enable the theme](#enable-the-theme) and
    [Add the dashboard](#add-the-dashboard).
 
 > HACS installs **themes**, but it cannot install a Lovelace *dashboard config*.
@@ -50,12 +57,14 @@ to the repo).
 
 1. Install **card-mod** from HACS (step 1 above).
 2. Copy `themes/perception.yaml` into your Home Assistant `config/themes/` folder.
-3. Make sure `configuration.yaml` loads themes:
+3. Copy `www/perception/InterVariable.woff2` into `config/www/perception/`
+   (create the folder if needed). HA serves it at `/local/perception/…`.
+4. Make sure `configuration.yaml` loads themes:
    ```yaml
    frontend:
      themes: !include_dir_merge_named themes
    ```
-4. Restart Home Assistant.
+5. Restart Home Assistant.
 
 ### Method C — Git clone into `/config` (best for development)
 
@@ -118,6 +127,10 @@ The goal is a tight loop with **no Home Assistant restarts**. Set it up once:
    - **Theme** — symlink it into the themes folder so `!include_dir_merge_named themes` picks it up:
      ```bash
      ln -s /config/glass-dashboard/themes/perception.yaml /config/themes/perception.yaml
+     ```
+   - **Font** — symlink the self‑hosted font into `www/` so `/local/` can serve it:
+     ```bash
+     mkdir -p /config/www && ln -s /config/glass-dashboard/www/perception /config/www/perception
      ```
    - **Dashboard** — point a YAML‑mode dashboard straight at the repo file:
      ```yaml

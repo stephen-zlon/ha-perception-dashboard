@@ -38,6 +38,19 @@ Perception:
   app-header-text-color: "rgba(255, 255, 255, 0.92)"
   app-header-selection-bar-color: "rgba(255, 255, 255, 0.85)"
 
+  # ------------------------------------------------------------------ tooltips
+  # ha-tooltip's background falls back to --ha-color-surface-default (a light
+  # surface) while its text falls back to --primary-text-color (near-white in
+  # this theme) → white-on-white, invisible in the top nav. Style it as frosted
+  # glass to match the cards: translucent dark fill, hairline border, rounded
+  # corners, soft drop shadow. (The blur itself is applied via card-mod-root-yaml
+  # below, since there's no theme token for backdrop-filter.)
+  ha-tooltip-background-color: "rgba(22, 22, 25, 0.55)"
+  ha-tooltip-text-color: "rgba(255, 255, 255, 0.92)"
+  ha-tooltip-border-radius: "14px"
+  ha-tooltip-padding: "8px 12px"
+  ha-tooltip-box-shadow: "0 8px 24px rgba(0, 0, 0, 0.45)"
+
   # -------------------------------------------------------------- card shape
   ha-card-border-radius: "24px"
   ha-card-border-color: "rgba(255, 255, 255, 0.28)"
@@ -55,9 +68,51 @@ Perception:
   # Tile / feature controls
   feature-button-background-color: "rgba(255, 255, 255, 0.10)"
 
+  # -------------------------------------------------------------- typography
+  # Inter — the dominant modern UI/dashboard typeface in 2026 (neutral, tall
+  # x-height, tabular figures). Loaded as a web font in the card-mod-root-yaml
+  # block below, then applied to every text surface here.
+  primary-font-family: "Inter, 'Helvetica Neue', Arial, sans-serif"
+  paper-font-common-base_-_font-family: "var(--primary-font-family)"
+  paper-font-common-code_-_font-family: "var(--primary-font-family)"
+  paper-font-body1_-_font-family: "var(--primary-font-family)"
+  paper-font-subhead_-_font-family: "var(--primary-font-family)"
+  paper-font-headline_-_font-family: "var(--primary-font-family)"
+  paper-font-caption_-_font-family: "var(--primary-font-family)"
+  paper-font-title_-_font-family: "var(--primary-font-family)"
+  ha-card-header-font-family: "var(--primary-font-family)"
+  mdc-typography-font-family: "var(--primary-font-family)"
+
   # --------------------------------------------------- the glass (card-mod)
   # This name MUST match the theme name above for card-mod to activate it.
   card-mod-theme: Perception
+  # Self-hosted Inter (variable) web font, injected at the app root so it's
+  # available inside every shadow DOM — no CDN, works fully offline. The font
+  # file must live at config/www/perception/InterVariable.woff2 (HA serves the
+  # www/ folder at /local/). See the README for how to install it.
+  card-mod-root-yaml: |
+    .: |
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: swap;
+        src: url("/local/perception/InterVariable.woff2") format("woff2");
+      }
+      html {
+        --primary-font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+        --mdc-typography-font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+        --paper-font-common-base_-_font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+        --paper-font-body1_-_font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+      }
+      /* Frost the tooltip body to match the cards. The translucent dark fill,
+         border and shadow come from the ha-tooltip-* theme tokens; the blur +
+         hairline edge (which have no theme token) are added here. */
+      ha-tooltip::part(body) {
+        backdrop-filter: blur(20px) saturate(160%);
+        -webkit-backdrop-filter: blur(20px) saturate(160%);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+      }
   card-mod-card: |
     ha-card {
       /* Higher-opacity frosted "liquid glass": far less see-through, with a
