@@ -11,8 +11,8 @@ rounded corners, and translucent whites over a dark background.
 
 | Path | What it is |
 |------|------------|
-| `themes/glassmorphic.yaml` | The theme. Sets the palette + background and applies the frosted‑glass effect to every card via card‑mod. |
-| `dashboards/glass-home.yaml` | A sample dashboard (clock, weather, lights, climate, media) using core cards. |
+| `themes/perception.yaml` | The theme. Sets the palette + background and applies the frosted‑glass effect to every card via card‑mod. |
+| `dashboards/perception.yaml` | A sample dashboard (clock, weather, lights, climate, media) using core cards. |
 | `hacs.json` | Lets HACS install the **theme** straight from this repo. |
 
 ## Requirements
@@ -38,7 +38,7 @@ to the repo).
 2. **Add this repo to HACS:** HACS → ⋮ (top‑right) → **Custom repositories** →
    paste your repo URL → **Category: Theme** → **Add**.
 3. Find **Perception Theme** in HACS → **Download**. This copies
-   `themes/glassmorphic.yaml` into your `config/themes/` folder for you.
+   `themes/perception.yaml` into your `config/themes/` folder for you.
 4. Continue to [Enable the theme](#enable-the-theme) and
    [Add the dashboard](#add-the-dashboard).
 
@@ -49,7 +49,7 @@ to the repo).
 ### Method B — Manual copy
 
 1. Install **card-mod** from HACS (step 1 above).
-2. Copy `themes/glassmorphic.yaml` into your Home Assistant `config/themes/` folder.
+2. Copy `themes/perception.yaml` into your Home Assistant `config/themes/` folder.
 3. Make sure `configuration.yaml` loads themes:
    ```yaml
    frontend:
@@ -67,8 +67,8 @@ there's **nothing to copy** and updates are a `git pull`. See
 
 ## Enable the theme
 
-- **Per user:** click your name (bottom‑left) → **Theme → Glassmorphic**, or
-- **Per dashboard view:** the sample already sets `theme: Glassmorphic` on the view.
+- **Per user:** click your name (bottom‑left) → **Theme → Perception**, or
+- **Per dashboard view:** the sample already sets `theme: Perception` on the view.
 
 If the theme doesn't appear, go to **Developer Tools → YAML → Reload Themes**
 (no restart needed), then hard‑refresh the browser.
@@ -77,17 +77,17 @@ If the theme doesn't appear, go to **Developer Tools → YAML → Reload Themes*
 
 **Quick way (paste):** open any dashboard → ⋮ → **Edit dashboard** → ⋮ →
 **Raw configuration editor** → paste the `views:` block from
-`dashboards/glass-home.yaml`.
+`dashboards/perception.yaml`.
 
 **Permanent YAML dashboard:** add to `configuration.yaml`:
 
 ```yaml
 lovelace:
   dashboards:
-    glass-home:
+    perception:
       mode: yaml
-      filename: dashboards/glass-home.yaml
-      title: Glass Home
+      filename: dashboards/perception.yaml
+      title: Perception
       icon: mdi:cube-outline
       show_in_sidebar: true
 ```
@@ -117,16 +117,16 @@ The goal is a tight loop with **no Home Assistant restarts**. Set it up once:
    Then wire HA to the cloned files:
    - **Theme** — symlink it into the themes folder so `!include_dir_merge_named themes` picks it up:
      ```bash
-     ln -s /config/glass-dashboard/themes/glassmorphic.yaml /config/themes/glassmorphic.yaml
+     ln -s /config/glass-dashboard/themes/perception.yaml /config/themes/perception.yaml
      ```
    - **Dashboard** — point a YAML‑mode dashboard straight at the repo file:
      ```yaml
      lovelace:
        dashboards:
-         glass-home:
+         perception:
            mode: yaml
-           filename: glass-dashboard/dashboards/glass-home.yaml
-           title: Glass Home
+           filename: glass-dashboard/dashboards/perception.yaml
+           title: Perception
            show_in_sidebar: true
      ```
 
@@ -139,7 +139,7 @@ The goal is a tight loop with **no Home Assistant restarts**. Set it up once:
 
 **4. Tweak CSS live first (optional but fast).** Open the browser dev tools,
    adjust `backdrop-filter`, `background` alpha, `border-radius` on `ha-card` until
-   it looks right, then paste the final values into `themes/glassmorphic.yaml`.
+   it looks right, then paste the final values into `themes/perception.yaml`.
 
 **5. Deploy / update:** commit and push from your machine, then on the HA box
    `cd /config/glass-dashboard && git pull` and reload themes. HACS users just hit
@@ -155,7 +155,7 @@ The goal is a tight loop with **no Home Assistant restarts**. Set it up once:
 
 ## Customization
 
-All styling lives in `themes/glassmorphic.yaml`:
+All styling lives in `themes/perception.yaml`:
 
 - **Background image instead of the gradient** — drop an image in `config/www/` and set:
   ```yaml

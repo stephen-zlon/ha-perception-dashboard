@@ -1,4 +1,4 @@
-# Glassmorphic — a near-black-and-white "glass" theme for Home Assistant.
+# Perception — a near-black-and-white "glass" theme for Home Assistant.
 #
 # Requires the card-mod frontend plugin (install via HACS). The card-mod-card
 # block below applies the frosted-glass effect to EVERY card automatically,
@@ -7,9 +7,9 @@
 # Install: drop this file in <config>/themes/, ensure configuration.yaml has
 #   frontend:
 #     themes: !include_dir_merge_named themes
-# then restart HA and pick "Glassmorphic" (Profile → Theme, or per-view `theme:`).
+# then restart HA and pick "Perception" (Profile → Theme, or per-view `theme:`).
 
-Glassmorphic:
+Perception:
   # ------------------------------------------------------------------ palette
   # Deliberately tiny palette: black, white, and translucent whites only.
   primary-color: "#e9e9ec"            # subtle "brand" accent (kept near-white)
@@ -54,7 +54,7 @@ Glassmorphic:
 
   # --------------------------------------------------- the glass (card-mod)
   # This name MUST match the theme name above for card-mod to activate it.
-  card-mod-theme: Glassmorphic
+  card-mod-theme: Perception
   card-mod-card: |
     ha-card {
       background: rgba(255, 255, 255, 0.06) !important;

@@ -1,4 +1,4 @@
-# Glass Home — a sample glassmorphic Home Assistant dashboard.
+# Perception — a sample glassmorphic Home Assistant dashboard.
 #
 # HOW TO USE
 #   Option A (quick preview): open any dashboard → ⋮ → "Edit dashboard" →
@@ -6,24 +6,24 @@
 #   Option B (YAML dashboard): reference this file from configuration.yaml:
 #       lovelace:
 #         dashboards:
-#           glass-home:
+#           perception:
 #             mode: yaml
-#             filename: dashboards/glass-home.yaml
-#             title: Glass Home
+#             filename: dashboards/perception.yaml
+#             title: Perception
 #             icon: mdi:cube-outline
 #             show_in_sidebar: true
 #
-# REQUIRES: card-mod (HACS) + the "Glassmorphic" theme (themes/glassmorphic.yaml).
+# REQUIRES: card-mod (HACS) + the "Perception" theme (themes/perception.yaml).
 # The frosted-glass look comes from the theme, so the cards below stay plain.
 #
 # Replace every entity id (light.*, sensor.*, weather.*, media_player.*) with
 # your own — these are common sample names and won't all exist on your system.
 
-title: Glass Home
+title: Perception
 views:
   - title: Home
     path: home
-    theme: Glassmorphic          # applies the glass look to this view
+    theme: Perception            # applies the glass look to this view
     type: sections
     max_columns: 3
     sections:
