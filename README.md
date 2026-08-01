@@ -1,4 +1,4 @@
-# Glassmorphic Dashboard
+# Perception Theme
 
 A slick, modern **glassmorphic** dashboard for Home Assistant in a deliberately
 tiny, near‑black‑and‑white palette: frosted‑glass cards, hairline borders, big
@@ -37,7 +37,7 @@ to the repo).
 1. **Install card-mod:** HACS → search **card-mod** → **Download** → restart HA if prompted.
 2. **Add this repo to HACS:** HACS → ⋮ (top‑right) → **Custom repositories** →
    paste your repo URL → **Category: Theme** → **Add**.
-3. Find **Glassmorphic Dashboard** in HACS → **Download**. This copies
+3. Find **Perception Theme** in HACS → **Download**. This copies
    `themes/glassmorphic.yaml` into your `config/themes/` folder for you.
 4. Continue to [Enable the theme](#enable-the-theme) and
    [Add the dashboard](#add-the-dashboard).
