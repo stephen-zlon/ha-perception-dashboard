@@ -218,6 +218,13 @@ All styling lives in `themes/perception.yaml`:
 
 - **No blur / cards look flat** — card‑mod isn't installed or loaded. Confirm it's in
   HACS and hard‑refresh. On very old browsers `backdrop-filter` is unsupported.
+  - **Check it's loaded:** open the browser console (F12) and run
+    `customElements.get('card-mod')` — a function means it's loaded, `undefined`
+    means it isn't. You can also verify the resource under
+    Settings → Dashboards → ⋮ → **Resources** (look for `lovelace-card-mod/card-mod.js`).
+  - **Automatic warning:** the sample dashboard includes a banner that appears at
+    the top **only when card‑mod is missing** (it self‑hides once card‑mod is
+    loaded), so you get a visible prompt to install it.
 - **Theme not in the list** — Developer Tools → YAML → **Reload Themes**; check the
   `frontend: themes:` include and that the file is in `config/themes/`.
 - **Glass looks black** — the blur has nothing bright behind it. That's expected with

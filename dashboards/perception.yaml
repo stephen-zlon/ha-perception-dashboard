@@ -30,6 +30,23 @@ views:
       # --------------------------------------------------------- Overview
       - type: grid
         cards:
+          # card-mod check: this banner stays visible ONLY when card-mod is
+          # missing. When card-mod IS loaded, the card_mod block below runs and
+          # hides the card; when it's NOT loaded, the block is ignored so the
+          # warning shows. The glass effect needs card-mod (install from HACS).
+          - type: markdown
+            content: >
+              ## ⚠️ card-mod is not loaded
+
+              The frosted‑glass look needs the **card-mod** frontend plugin.
+              Install it from **HACS → Frontend → card-mod**, then hard‑refresh
+              the browser. (If you're seeing this, only fonts/colours are
+              active — the blur and glass edges are missing.)
+            card_mod:
+              style: |
+                :host {
+                  display: none !important;
+                }
           - type: markdown
             content: >
               # {{ now().strftime('%H:%M') }}
