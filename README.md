@@ -153,6 +153,40 @@ The goal is a tight loop with **no Home Assistant restarts**. Set it up once:
 
 ---
 
+## Releasing (versioning for HACS)
+
+HACS versions this repo from **Git tags / GitHub Releases**, not from Home
+Assistant (HA has no concept of theme versions). Once at least one release
+exists, HACS shows the tag in its download dialog and only lights up the
+**Update** button when a newer tag exists — much calmer than tracking every
+commit on `main`.
+
+Publish a new version like this:
+
+1. Commit and push your changes to `main`:
+   ```bash
+   git add -A
+   git commit -m "Describe the change"
+   git push origin main
+   ```
+2. Tag and create the GitHub Release (the tag *is* the version):
+   ```bash
+   gh release create v1.1.0 --target main --title "v1.1.0" --notes "What changed"
+   ```
+3. In HACS, users get an **Update** prompt → redownload. If the theme name or
+   file changed, they reselect **Perception** under Profile → Theme, then run
+   **Developer Tools → YAML → Reload Themes** and hard‑refresh.
+
+Notes:
+- Use consistent semver tags (`v1.2.3`); HACS sorts them to find the latest and
+  offers the last 5 releases plus the default branch.
+- `hacs.json`'s `homeassistant` key is a *minimum HA version* gate, not the
+  theme's own version.
+- A single‑file theme needs no `zip_release`/`filename` in `hacs.json` — HACS
+  grabs the one YAML in `themes/`.
+
+---
+
 ## Customization
 
 All styling lives in `themes/perception.yaml`:
