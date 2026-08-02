@@ -27,8 +27,8 @@ Perception:
   lovelace-background: "radial-gradient(1200px circle at 18% 12%, #212125 0%, #0c0c0e 55%, #000000 100%) fixed"
   primary-background-color: "#0a0a0b"
   secondary-background-color: "#111113"
-  card-background-color: "rgba(255, 255, 255, 0.16)"
-  ha-card-background: "rgba(255, 255, 255, 0.16)"
+  card-background-color: "rgba(255, 255, 255, 0.33)"
+  ha-card-background: "rgba(255, 255, 255, 0.33)"
 
   # Surface hierarchy (HA 2026.5+). These are the fallback surfaces used by
   # everything card-mod-card doesn't reach — dialogs, menus, popups, tooltips.
@@ -43,18 +43,18 @@ Perception:
 
   # Left sidebar: keep it mostly opaque so it doesn't read as see-through
   # against the gradient (was falling back to a translucent surface).
-  sidebar-background-color: "rgba(12, 12, 14, 0.88)"
+  sidebar-background-color: "rgba(12, 12, 14, 0.90)"
   sidebar-text-color: "rgba(255, 255, 255, 0.82)"
   sidebar-icon-color: "rgba(255, 255, 255, 0.55)"
   # Selected item: a translucent white pill with brighter text/icon, so the
   # active page reads as part of the glass rather than a flat highlight.
-  sidebar-selected-background-color: "rgba(255, 255, 255, 0.10)"
+  sidebar-selected-background-color: "rgba(255, 255, 255, 0.28)"
   sidebar-selected-text-color: "rgba(255, 255, 255, 0.98)"
   sidebar-selected-icon-color: "#ffffff"
 
   # Darken the backdrop behind more-info dialogs so the wallpaper/gradient
   # showing through isn't distracting when a dialog opens.
-  mdc-dialog-scrim-color: "rgba(0, 0, 0, 0.72)"
+  mdc-dialog-scrim-color: "rgba(0, 0, 0, 0.78)"
   # Glass dialogs (HA 2026.5+): frost the dialog panel and blur the scrim so
   # more-info / settings popups match the cards instead of being a flat sheet.
   ha-dialog-border-radius: "24px"
@@ -73,7 +73,7 @@ Perception:
   # glass to match the cards: translucent dark fill, hairline border, rounded
   # corners, soft drop shadow. (The blur itself is applied via card-mod-root-yaml
   # below, since there's no theme token for backdrop-filter.)
-  ha-tooltip-background-color: "rgba(22, 22, 25, 0.55)"
+  ha-tooltip-background-color: "rgba(22, 22, 25, 0.64)"
   ha-tooltip-text-color: "rgba(255, 255, 255, 0.92)"
   ha-tooltip-border-radius: "14px"
   ha-tooltip-padding: "8px 12px"
@@ -81,7 +81,7 @@ Perception:
 
   # -------------------------------------------------------------- card shape
   ha-card-border-radius: "24px"
-  ha-card-border-color: "rgba(255, 255, 255, 0.28)"
+  ha-card-border-color: "rgba(255, 255, 255, 0.42)"
   ha-card-border-width: "1.5px"
   ha-card-box-shadow: "0 12px 40px rgba(0, 0, 0, 0.55)"
 
@@ -92,9 +92,9 @@ Perception:
   switch-checked-color: "#ffffff"
   switch-unchecked-color: "rgba(255, 255, 255, 0.30)"
   slider-color: "rgba(255, 255, 255, 0.85)"
-  slider-track-color: "rgba(255, 255, 255, 0.12)"
+  slider-track-color: "rgba(255, 255, 255, 0.30)"
   # Tile / feature controls
-  feature-button-background-color: "rgba(255, 255, 255, 0.10)"
+  feature-button-background-color: "rgba(255, 255, 255, 0.28)"
 
   # -------------------------------------------------------------- typography
   # Inter — the dominant modern UI/dashboard typeface in 2026 (neutral, tall
@@ -139,7 +139,61 @@ Perception:
       ha-tooltip::part(body) {
         backdrop-filter: blur(20px) saturate(160%);
         -webkit-backdrop-filter: blur(20px) saturate(160%);
-        border: 1px solid rgba(255, 255, 255, 0.22);
+        border: 1px solid rgba(255, 255, 255, 0.38);
+      }
+      /* --- Fix invisible (white-on-white) text in pickers & edit fields ----
+         HA's search/combo-box dropdowns (icon picker, entity picker, area
+         picker, etc.) render each row as a Material Design 3 list item
+         (<ha-combo-box-item>/<ha-md-list-item>, slot="headline") inside an
+         overlay, and plain text inputs as <ha-textfield>. These components
+         default their own container/surface color to Material's light
+         baseline, while this theme forces near-white text everywhere — so
+         without overriding the container color too, the text is invisible:
+         white on white. Cover MD3, legacy mwc/paper, and Vaadin (combo-box
+         overlay) tokens since HA mixes all three across pickers. */
+      ha-combo-box-item,
+      ha-md-list-item,
+      md-list-item,
+      ha-list-item,
+      mwc-list-item {
+        --md-list-item-container-color: rgba(26, 26, 30, 0.98);
+        --md-list-item-label-text-color: rgba(255, 255, 255, 0.92);
+        --md-list-item-supporting-text-color: rgba(255, 255, 255, 0.60);
+        --md-list-item-leading-icon-color: rgba(255, 255, 255, 0.72);
+        --md-list-item-trailing-icon-color: rgba(255, 255, 255, 0.72);
+        --md-list-item-selected-container-color: rgba(255, 255, 255, 0.14);
+        --mdc-theme-text-primary-on-background: rgba(255, 255, 255, 0.92);
+        --mdc-theme-text-secondary-on-background: rgba(255, 255, 255, 0.60);
+      }
+      vaadin-combo-box-overlay,
+      md-menu,
+      mwc-menu-surface,
+      ha-menu {
+        --md-menu-container-color: rgba(24, 24, 27, 0.98);
+        --mdc-menu-surface-fill-color: rgba(24, 24, 27, 0.98);
+        --lumo-base-color: rgba(24, 24, 27, 0.98);
+        --lumo-body-text-color: rgba(255, 255, 255, 0.92);
+        --lumo-contrast-10pct: rgba(255, 255, 255, 0.10);
+        --lumo-contrast-60pct: rgba(255, 255, 255, 0.55);
+      }
+      vaadin-combo-box-overlay::part(overlay) {
+        background: rgba(24, 24, 27, 0.98);
+      }
+      vaadin-combo-box-overlay::part(content),
+      vaadin-item::part(content) {
+        color: rgba(255, 255, 255, 0.92);
+      }
+      ha-textfield,
+      mwc-textfield,
+      paper-input {
+        --mdc-text-field-fill-color: rgba(255, 255, 255, 0.08);
+        --mdc-text-field-ink-color: rgba(255, 255, 255, 0.92);
+        --mdc-text-field-label-ink-color: rgba(255, 255, 255, 0.58);
+        --mdc-text-field-idle-line-color: rgba(255, 255, 255, 0.30);
+        --mdc-text-field-hover-line-color: rgba(255, 255, 255, 0.50);
+        --paper-input-container-color: rgba(255, 255, 255, 0.58);
+        --paper-input-container-focus-color: #ffffff;
+        --paper-input-container-input-color: rgba(255, 255, 255, 0.92);
       }
       /* --- Accessibility & performance fallbacks ---------------------------
          On devices that can't (or shouldn't) render blur, glass turns into a
@@ -175,11 +229,11 @@ Perception:
          thick specular edge so it reads as a solid pane of glass. */
       background:
         linear-gradient(135deg,
-          rgba(255, 255, 255, 0.22) 0%,
-          rgba(255, 255, 255, 0.13) 100%) !important;
+          rgba(255, 255, 255, 0.38) 0%,
+          rgba(255, 255, 255, 0.30) 100%) !important;
       backdrop-filter: blur(30px) saturate(180%);
       -webkit-backdrop-filter: blur(30px) saturate(180%);
-      border: 1.5px solid rgba(255, 255, 255, 0.30) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.44) !important;
       border-radius: 24px;
       box-shadow:
         0 12px 40px rgba(0, 0, 0, 0.55),           /* deep drop → panel floats */
