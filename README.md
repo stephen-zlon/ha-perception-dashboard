@@ -1,8 +1,8 @@
 # Perception Theme
 
-A slick, modern **glassmorphic** dashboard for Home Assistant in a deliberately
-tiny, near‑black‑and‑white palette: frosted‑glass cards, hairline borders, big
-rounded corners, and translucent whites over a dark background.
+A slick, modern **glassmorphic** dashboard for Home Assistant in a black‑and‑gold
+palette: frosted‑glass cards with a warm gold sheen, hairline gold borders, big
+rounded corners, and translucent gold glass over a dark background.
 
 > **This is for a backlit screen** (wall tablet, monitor, phone) — glassmorphism
 > relies on blur and transparency that e‑ink panels can't render.
@@ -211,8 +211,9 @@ All styling lives in `themes/perception.yaml`:
 - **More / less frost** — change `blur(22px)` and the `rgba(255,255,255,0.06)` alpha
   in the `card-mod-card` block.
 - **Rounding** — `ha-card-border-radius` (and the `border-radius` in `card-mod-card`).
-- **Palette** — it's intentionally minimal (black, white, translucent whites). Keep
-  accents near‑white to preserve the look.
+- **Palette** — black background, warm ivory text, and a single gold accent
+  (`#d4af37`/`#f5cf6b`) used for every active/checked/selected state. Keep new
+  accents gold rather than introducing other hues to preserve the look.
 
 ## Troubleshooting
 

@@ -1,4 +1,4 @@
-# Perception — a near-black-and-white "glass" theme for Home Assistant.
+# Perception — a black-and-gold "liquid glass" theme for Home Assistant.
 #
 # Requires the card-mod frontend plugin (install via HACS). The card-mod-card
 # block below applies the frosted-glass effect to EVERY card automatically,
@@ -11,24 +11,27 @@
 
 Perception:
   # ------------------------------------------------------------------ palette
-  # Deliberately tiny palette: black, white, and translucent whites only.
-  primary-color: "#e9e9ec"            # subtle "brand" accent (kept near-white)
-  accent-color: "#ffffff"
-  primary-text-color: "rgba(255, 255, 255, 0.92)"
-  secondary-text-color: "rgba(255, 255, 255, 0.58)"
-  disabled-text-color: "rgba(255, 255, 255, 0.32)"
-  text-primary-color: "rgba(255, 255, 255, 0.92)"
-  divider-color: "rgba(255, 255, 255, 0.10)"
+  # Warm black background with a single gold accent, used consistently for
+  # every interactive/active state (primary-color, switches, sliders, focus
+  # rings, selected sidebar item, checked checkboxes, ...). Text stays a warm
+  # ivory-white for legibility rather than gold-on-gold.
+  primary-color: "#d4af37"            # classic "gold" — primary accent
+  accent-color: "#f5cf6b"             # brighter gold — hover/accent highlights
+  primary-text-color: "rgba(250, 245, 235, 0.92)"
+  secondary-text-color: "rgba(228, 210, 170, 0.58)"
+  disabled-text-color: "rgba(228, 210, 170, 0.30)"
+  text-primary-color: "rgba(250, 245, 235, 0.92)"
+  divider-color: "rgba(212, 175, 55, 0.16)"
 
   # -------------------------------------------------------------- backgrounds
-  # A dark, almost-black gradient gives the glass something to blur against.
-  # Swap the gradient for `url('/local/wallpaper.jpg') center/cover fixed` to
-  # blur a real photo instead.
-  lovelace-background: "radial-gradient(1200px circle at 18% 12%, #212125 0%, #0c0c0e 55%, #000000 100%) fixed"
-  primary-background-color: "#0a0a0b"
-  secondary-background-color: "#111113"
-  card-background-color: "rgba(255, 255, 255, 0.33)"
-  ha-card-background: "rgba(255, 255, 255, 0.33)"
+  # A warm near-black gradient (bronze glow, not neutral grey) gives the gold
+  # glass something to blur against. Swap the gradient for
+  # `url('/local/wallpaper.jpg') center/cover fixed` to blur a real photo instead.
+  lovelace-background: "radial-gradient(1200px circle at 18% 12%, #2a2110 0%, #140f08 55%, #030201 100%) fixed"
+  primary-background-color: "#0a0805"
+  secondary-background-color: "#141008"
+  card-background-color: "rgba(212, 175, 55, 0.18)"
+  ha-card-background: "rgba(212, 175, 55, 0.18)"
 
   # Surface hierarchy (HA 2026.5+). These are the fallback surfaces used by
   # everything card-mod-card doesn't reach — dialogs, menus, popups, tooltips.
@@ -36,10 +39,10 @@ Perception:
   # white boxes against our dark theme (this is what caused the white-on-white
   # tooltip). Pinning them dark keeps the whole UI cohesive. Harmless on older
   # HA (the tokens are simply ignored).
-  ha-color-surface-default: "#141416"
-  ha-color-surface-low: "#1a1a1d"
-  ha-color-surface-lower: "#0c0c0e"
-  ha-color-on-surface-default: "rgba(255, 255, 255, 0.92)"
+  ha-color-surface-default: "#171209"
+  ha-color-surface-low: "#1d1710"
+  ha-color-surface-lower: "#0a0703"
+  ha-color-on-surface-default: "rgba(250, 245, 235, 0.92)"
 
   # Forms (ha-input/wa-input, ha-textarea, ha-checkbox, ha-picker-field, ...).
   # HA 2026.x rebuilt its form controls on a new semantic "--ha-color-*" token
@@ -55,29 +58,36 @@ Perception:
   # Overriding the tokens directly here — regardless of light/dark detection —
   # is the actual fix (a previous attempt at forcing this via `::part(input)`
   # didn't work because ha-input re-exports that part under a different name).
-  ha-color-text-primary: "rgba(255, 255, 255, 0.92)"
-  ha-color-text-secondary: "rgba(255, 255, 255, 0.58)"
-  ha-color-text-disabled: "rgba(255, 255, 255, 0.32)"
-  ha-color-border-neutral-quiet: "rgba(255, 255, 255, 0.14)"
-  ha-color-border-neutral-normal: "rgba(255, 255, 255, 0.30)"
-  ha-color-border-neutral-loud: "rgba(255, 255, 255, 0.55)"
-  ha-color-form-background: "rgba(255, 255, 255, 0.10)"
-  ha-color-form-background-hover: "rgba(255, 255, 255, 0.16)"
-  ha-color-form-background-disabled: "rgba(255, 255, 255, 0.06)"
+  ha-color-text-primary: "rgba(250, 245, 235, 0.92)"
+  ha-color-text-secondary: "rgba(228, 210, 170, 0.58)"
+  ha-color-text-disabled: "rgba(228, 210, 170, 0.30)"
+  ha-color-border-neutral-quiet: "rgba(212, 175, 55, 0.16)"
+  ha-color-border-neutral-normal: "rgba(212, 175, 55, 0.34)"
+  ha-color-border-neutral-loud: "rgba(212, 175, 55, 0.60)"
+  ha-color-form-background: "rgba(212, 175, 55, 0.10)"
+  ha-color-form-background-hover: "rgba(212, 175, 55, 0.16)"
+  ha-color-form-background-disabled: "rgba(120, 100, 60, 0.06)"
   # Placeholder text color in ha-input reads this core scale token directly
   # (not one of the semantic aliases above).
-  ha-color-neutral-60: "rgba(255, 255, 255, 0.45)"
+  ha-color-neutral-60: "rgba(228, 210, 170, 0.45)"
+  # Focus ring, links, and the checked-checkbox fill all read these directly —
+  # tie them to the gold accent so keyboard focus/links/checked states read
+  # as part of the same gold language as switches/sliders/sidebar selection.
+  ha-color-focus: "#d4af37"
+  ha-color-text-link: "#f5cf6b"
+  ha-color-fill-primary-loud-resting: "#d4af37"
+  ha-color-fill-primary-loud-hover: "#f5cf6b"
 
   # Left sidebar: keep it mostly opaque so it doesn't read as see-through
   # against the gradient (was falling back to a translucent surface).
-  sidebar-background-color: "rgba(12, 12, 14, 0.90)"
-  sidebar-text-color: "rgba(255, 255, 255, 0.82)"
-  sidebar-icon-color: "rgba(255, 255, 255, 0.55)"
-  # Selected item: a translucent white pill with brighter text/icon, so the
+  sidebar-background-color: "rgba(10, 8, 5, 0.90)"
+  sidebar-text-color: "rgba(250, 245, 235, 0.82)"
+  sidebar-icon-color: "rgba(228, 210, 170, 0.55)"
+  # Selected item: a translucent gold pill with brighter text/icon, so the
   # active page reads as part of the glass rather than a flat highlight.
-  sidebar-selected-background-color: "rgba(255, 255, 255, 0.28)"
-  sidebar-selected-text-color: "rgba(255, 255, 255, 0.98)"
-  sidebar-selected-icon-color: "#ffffff"
+  sidebar-selected-background-color: "rgba(212, 175, 55, 0.22)"
+  sidebar-selected-text-color: "rgba(255, 250, 235, 0.98)"
+  sidebar-selected-icon-color: "#f5cf6b"
 
   # Darken the backdrop behind more-info dialogs so the wallpaper/gradient
   # showing through isn't distracting when a dialog opens.
@@ -90,8 +100,8 @@ Perception:
 
   # ------------------------------------------------------------------- header
   app-header-background-color: "transparent"
-  app-header-text-color: "rgba(255, 255, 255, 0.92)"
-  app-header-selection-bar-color: "rgba(255, 255, 255, 0.85)"
+  app-header-text-color: "rgba(250, 245, 235, 0.92)"
+  app-header-selection-bar-color: "#d4af37"
 
   # ------------------------------------------------------------------ tooltips
   # ha-tooltip's background falls back to --ha-color-surface-default (a light
@@ -100,28 +110,31 @@ Perception:
   # glass to match the cards: translucent dark fill, hairline border, rounded
   # corners, soft drop shadow. (The blur itself is applied via card-mod-root-yaml
   # below, since there's no theme token for backdrop-filter.)
-  ha-tooltip-background-color: "rgba(22, 22, 25, 0.64)"
-  ha-tooltip-text-color: "rgba(255, 255, 255, 0.92)"
+  ha-tooltip-background-color: "rgba(20, 16, 8, 0.70)"
+  ha-tooltip-text-color: "rgba(250, 245, 235, 0.92)"
   ha-tooltip-border-radius: "14px"
   ha-tooltip-padding: "8px 12px"
   ha-tooltip-box-shadow: "0 8px 24px rgba(0, 0, 0, 0.45)"
 
   # -------------------------------------------------------------- card shape
   ha-card-border-radius: "24px"
-  ha-card-border-color: "rgba(255, 255, 255, 0.42)"
+  ha-card-border-color: "rgba(212, 175, 55, 0.45)"
   ha-card-border-width: "1.5px"
   ha-card-box-shadow: "0 12px 40px rgba(0, 0, 0, 0.55)"
 
   # ------------------------------------------------- controls / icons / state
-  paper-item-icon-color: "rgba(255, 255, 255, 0.72)"
-  state-icon-color: "rgba(255, 255, 255, 0.85)"
-  state-icon-active-color: "#ffffff"
-  switch-checked-color: "#ffffff"
-  switch-unchecked-color: "rgba(255, 255, 255, 0.30)"
-  slider-color: "rgba(255, 255, 255, 0.85)"
-  slider-track-color: "rgba(255, 255, 255, 0.30)"
+  # Default icons/dividers stay a warm off-white; only ACTIVE/checked/selected
+  # elements go gold, so gold reads as "this is on / selected" rather than
+  # decorating everything.
+  paper-item-icon-color: "rgba(250, 245, 235, 0.72)"
+  state-icon-color: "rgba(228, 210, 170, 0.75)"
+  state-icon-active-color: "#d4af37"
+  switch-checked-color: "#d4af37"
+  switch-unchecked-color: "rgba(228, 210, 170, 0.30)"
+  slider-color: "#d4af37"
+  slider-track-color: "rgba(228, 210, 170, 0.30)"
   # Tile / feature controls
-  feature-button-background-color: "rgba(255, 255, 255, 0.28)"
+  feature-button-background-color: "rgba(212, 175, 55, 0.22)"
 
   # -------------------------------------------------------------- typography
   # Inter — the dominant modern UI/dashboard typeface in 2026 (neutral, tall
@@ -164,9 +177,9 @@ Perception:
          border and shadow come from the ha-tooltip-* theme tokens; the blur +
          hairline edge (which have no theme token) are added here. */
       ha-tooltip::part(body) {
-        backdrop-filter: blur(20px) saturate(160%);
-        -webkit-backdrop-filter: blur(20px) saturate(160%);
-        border: 1px solid rgba(255, 255, 255, 0.38);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid rgba(212, 175, 55, 0.45);
       }
       /* --- Fix invisible (white-on-white) text in pickers & edit fields ----
          HA's search/combo-box dropdowns (icon picker, entity picker, area
@@ -183,32 +196,32 @@ Perception:
       md-list-item,
       ha-list-item,
       mwc-list-item {
-        --md-list-item-container-color: rgba(26, 26, 30, 0.98);
-        --md-list-item-label-text-color: rgba(255, 255, 255, 0.92);
-        --md-list-item-supporting-text-color: rgba(255, 255, 255, 0.60);
-        --md-list-item-leading-icon-color: rgba(255, 255, 255, 0.72);
-        --md-list-item-trailing-icon-color: rgba(255, 255, 255, 0.72);
-        --md-list-item-selected-container-color: rgba(255, 255, 255, 0.14);
-        --mdc-theme-text-primary-on-background: rgba(255, 255, 255, 0.92);
-        --mdc-theme-text-secondary-on-background: rgba(255, 255, 255, 0.60);
+        --md-list-item-container-color: rgba(23, 18, 9, 0.98);
+        --md-list-item-label-text-color: rgba(250, 245, 235, 0.92);
+        --md-list-item-supporting-text-color: rgba(228, 210, 170, 0.60);
+        --md-list-item-leading-icon-color: rgba(228, 210, 170, 0.72);
+        --md-list-item-trailing-icon-color: rgba(228, 210, 170, 0.72);
+        --md-list-item-selected-container-color: rgba(212, 175, 55, 0.20);
+        --mdc-theme-text-primary-on-background: rgba(250, 245, 235, 0.92);
+        --mdc-theme-text-secondary-on-background: rgba(228, 210, 170, 0.60);
       }
       vaadin-combo-box-overlay,
       md-menu,
       mwc-menu-surface,
       ha-menu {
-        --md-menu-container-color: rgba(24, 24, 27, 0.98);
-        --mdc-menu-surface-fill-color: rgba(24, 24, 27, 0.98);
-        --lumo-base-color: rgba(24, 24, 27, 0.98);
-        --lumo-body-text-color: rgba(255, 255, 255, 0.92);
-        --lumo-contrast-10pct: rgba(255, 255, 255, 0.10);
-        --lumo-contrast-60pct: rgba(255, 255, 255, 0.55);
+        --md-menu-container-color: rgba(20, 16, 8, 0.98);
+        --mdc-menu-surface-fill-color: rgba(20, 16, 8, 0.98);
+        --lumo-base-color: rgba(20, 16, 8, 0.98);
+        --lumo-body-text-color: rgba(250, 245, 235, 0.92);
+        --lumo-contrast-10pct: rgba(212, 175, 55, 0.10);
+        --lumo-contrast-60pct: rgba(228, 210, 170, 0.55);
       }
       vaadin-combo-box-overlay::part(overlay) {
-        background: rgba(24, 24, 27, 0.98);
+        background: rgba(20, 16, 8, 0.98);
       }
       vaadin-combo-box-overlay::part(content),
       vaadin-item::part(content) {
-        color: rgba(255, 255, 255, 0.92);
+        color: rgba(250, 245, 235, 0.92);
       }
       /* Legacy text fields (HA < 2026, still mwc/paper-based per this repo's
          2024.8.0 hacs.json minimum). Harmless no-ops on newer HA, which
@@ -217,14 +230,14 @@ Perception:
       ha-textfield,
       mwc-textfield,
       paper-input {
-        --mdc-text-field-fill-color: rgba(255, 255, 255, 0.08);
-        --mdc-text-field-ink-color: rgba(255, 255, 255, 0.92);
-        --mdc-text-field-label-ink-color: rgba(255, 255, 255, 0.58);
-        --mdc-text-field-idle-line-color: rgba(255, 255, 255, 0.30);
-        --mdc-text-field-hover-line-color: rgba(255, 255, 255, 0.50);
-        --paper-input-container-color: rgba(255, 255, 255, 0.58);
-        --paper-input-container-focus-color: #ffffff;
-        --paper-input-container-input-color: rgba(255, 255, 255, 0.92);
+        --mdc-text-field-fill-color: rgba(212, 175, 55, 0.08);
+        --mdc-text-field-ink-color: rgba(250, 245, 235, 0.92);
+        --mdc-text-field-label-ink-color: rgba(228, 210, 170, 0.58);
+        --mdc-text-field-idle-line-color: rgba(212, 175, 55, 0.30);
+        --mdc-text-field-hover-line-color: rgba(212, 175, 55, 0.55);
+        --paper-input-container-color: rgba(228, 210, 170, 0.58);
+        --paper-input-container-focus-color: #d4af37;
+        --paper-input-container-input-color: rgba(250, 245, 235, 0.92);
       }
       /* Belt-and-suspenders for ha-input/ha-textarea (HA 2026.x): these wrap
          Web Awesome's <wa-input>/<wa-textarea>, which re-export their inner
@@ -239,13 +252,13 @@ Perception:
          that approach silently failed before.) */
       ha-input::part(wa-input),
       ha-textarea::part(wa-textarea) {
-        color: rgba(255, 255, 255, 0.92) !important;
-        background-color: rgba(255, 255, 255, 0.10) !important;
-        caret-color: #ffffff !important;
+        color: rgba(250, 245, 235, 0.92) !important;
+        background-color: rgba(212, 175, 55, 0.10) !important;
+        caret-color: #d4af37 !important;
       }
       ha-input::part(wa-input)::placeholder,
       ha-textarea::part(wa-textarea)::placeholder {
-        color: rgba(255, 255, 255, 0.45) !important;
+        color: rgba(228, 210, 170, 0.45) !important;
       }
       /* --- Accessibility & performance fallbacks ---------------------------
          On devices that can't (or shouldn't) render blur, glass turns into a
@@ -254,7 +267,7 @@ Perception:
          "reduce transparency" setting. */
       @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
         ha-card {
-          background: #16161a !important;
+          background: #1a140a !important;
           backdrop-filter: none !important;
           -webkit-backdrop-filter: none !important;
         }
@@ -262,10 +275,10 @@ Perception:
       }
       @media (prefers-reduced-transparency: reduce) {
         ha-card {
-          background: #16161a !important;
+          background: #1a140a !important;
           backdrop-filter: none !important;
           -webkit-backdrop-filter: none !important;
-          border-color: rgba(255, 255, 255, 0.22) !important;
+          border-color: rgba(212, 175, 55, 0.35) !important;
         }
         ha-tooltip::part(body) {
           backdrop-filter: none;
@@ -277,19 +290,21 @@ Perception:
       }
   card-mod-card: |
     ha-card {
-      /* Higher-opacity frosted "liquid glass": far less see-through, with a
-         thick specular edge so it reads as a solid pane of glass. */
+      /* "Liquid gold glass": a warm gold specular sheen top-left fading into
+         a darker bronze base bottom-right, with a bright gold hairline edge
+         and a gold glint along the top lip — reads as a pane of gold-tinted
+         glass rather than a flat gold fill. */
       background:
         linear-gradient(135deg,
-          rgba(255, 255, 255, 0.38) 0%,
-          rgba(255, 255, 255, 0.30) 100%) !important;
+          rgba(255, 215, 130, 0.36) 0%,
+          rgba(120, 90, 30, 0.20) 100%) !important;
       backdrop-filter: blur(30px) saturate(180%);
       -webkit-backdrop-filter: blur(30px) saturate(180%);
-      border: 1.5px solid rgba(255, 255, 255, 0.44) !important;
+      border: 1.5px solid rgba(212, 175, 55, 0.46) !important;
       border-radius: 24px;
       box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.55),           /* deep drop → panel floats */
-        inset 0 1.5px 0 rgba(255, 255, 255, 0.45), /* bright top lip highlight */
-        inset 0 -1px 1px rgba(0, 0, 0, 0.25),      /* shaded bottom edge */
-        inset 0 0 0 1px rgba(255, 255, 255, 0.08); /* faint inner ring */
+        0 12px 40px rgba(0, 0, 0, 0.55),             /* deep drop → panel floats */
+        inset 0 1.5px 0 rgba(255, 230, 160, 0.55),   /* bright gold top lip glint */
+        inset 0 -1px 1px rgba(40, 25, 5, 0.35),      /* warm shaded bottom edge */
+        inset 0 0 0 1px rgba(212, 175, 55, 0.12);    /* faint gold inner ring */
     }
