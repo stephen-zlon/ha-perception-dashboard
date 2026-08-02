@@ -41,6 +41,33 @@ Perception:
   ha-color-surface-lower: "#0c0c0e"
   ha-color-on-surface-default: "rgba(255, 255, 255, 0.92)"
 
+  # Forms (ha-input/wa-input, ha-textarea, ha-checkbox, ha-picker-field, ...).
+  # HA 2026.x rebuilt its form controls on a new semantic "--ha-color-*" token
+  # system (src/resources/theme/color/semantic.globals.ts) that is completely
+  # separate from the classic primary-text-color/card-background-color tokens
+  # above. HA only swaps in its own dark variant of these tokens when it
+  # detects a "dark" theme; a flat custom theme like this one (no `modes:`
+  # block) doesn't trip that detection, so every form control's *background*
+  # silently stayed on HA's light default (near-white) while the typed-in
+  # *text* still inherited our near-white --primary-text-color normally (color
+  # is an inherited CSS property, unlike background-color) → invisible
+  # white-on-white text in every text field, textarea, checkbox and picker.
+  # Overriding the tokens directly here — regardless of light/dark detection —
+  # is the actual fix (a previous attempt at forcing this via `::part(input)`
+  # didn't work because ha-input re-exports that part under a different name).
+  ha-color-text-primary: "rgba(255, 255, 255, 0.92)"
+  ha-color-text-secondary: "rgba(255, 255, 255, 0.58)"
+  ha-color-text-disabled: "rgba(255, 255, 255, 0.32)"
+  ha-color-border-neutral-quiet: "rgba(255, 255, 255, 0.14)"
+  ha-color-border-neutral-normal: "rgba(255, 255, 255, 0.30)"
+  ha-color-border-neutral-loud: "rgba(255, 255, 255, 0.55)"
+  ha-color-form-background: "rgba(255, 255, 255, 0.10)"
+  ha-color-form-background-hover: "rgba(255, 255, 255, 0.16)"
+  ha-color-form-background-disabled: "rgba(255, 255, 255, 0.06)"
+  # Placeholder text color in ha-input reads this core scale token directly
+  # (not one of the semantic aliases above).
+  ha-color-neutral-60: "rgba(255, 255, 255, 0.45)"
+
   # Left sidebar: keep it mostly opaque so it doesn't read as see-through
   # against the gradient (was falling back to a translucent surface).
   sidebar-background-color: "rgba(12, 12, 14, 0.90)"
@@ -183,6 +210,10 @@ Perception:
       vaadin-item::part(content) {
         color: rgba(255, 255, 255, 0.92);
       }
+      /* Legacy text fields (HA < 2026, still mwc/paper-based per this repo's
+         2024.8.0 hacs.json minimum). Harmless no-ops on newer HA, which
+         replaced these with ha-input/wa-input (fixed via the ha-color-*
+         tokens above) — see themes/perception.yaml's "Forms" section. */
       ha-textfield,
       mwc-textfield,
       paper-input {
@@ -195,28 +226,26 @@ Perception:
         --paper-input-container-focus-color: #ffffff;
         --paper-input-container-input-color: rgba(255, 255, 255, 0.92);
       }
-      /* Custom-property overrides above only apply if the component's own
-         stylesheet reads them. ha-textfield's actual <input> is a rewritten
-         Lit template that exposes its input as a CSS Shadow Part instead
-         (`<input part="input" class="control">`), so it doesn't necessarily
-         consume --mdc-text-field-*. ::part() pierces the shadow root
-         directly regardless of what the internal CSS references — this is
-         the reliable fix. "*" is required (not a specific tag) since the
-         same part name is reused by several picker/field components. */
-      *::part(input),
-      *::part(textarea) {
+      /* Belt-and-suspenders for ha-input/ha-textarea (HA 2026.x): these wrap
+         Web Awesome's <wa-input>/<wa-textarea>, which re-export their inner
+         native <input>/<textarea> up through TWO shadow boundaries under
+         different part names at each hop (confirmed via
+         home-assistant/frontend src/components/input/ha-input.ts:
+         exportparts="base:wa-base, hint:wa-hint, input:wa-input"). Forcing
+         the fill/text color directly here means the fix holds even if a
+         future HA release changes what the ha-color-form-background token
+         resolves to. (A generic `*::part(input)` does NOT reach this — the
+         part is renamed to "wa-input" at the ha-input boundary, which is why
+         that approach silently failed before.) */
+      ha-input::part(wa-input),
+      ha-textarea::part(wa-textarea) {
         color: rgba(255, 255, 255, 0.92) !important;
         background-color: rgba(255, 255, 255, 0.10) !important;
         caret-color: #ffffff !important;
-        -webkit-text-fill-color: rgba(255, 255, 255, 0.92) !important;
       }
-      *::part(input)::placeholder,
-      *::part(textarea)::placeholder {
+      ha-input::part(wa-input)::placeholder,
+      ha-textarea::part(wa-textarea)::placeholder {
         color: rgba(255, 255, 255, 0.45) !important;
-      }
-      *::part(label),
-      *::part(floating-label) {
-        color: rgba(255, 255, 255, 0.58) !important;
       }
       /* --- Accessibility & performance fallbacks ---------------------------
          On devices that can't (or shouldn't) render blur, glass turns into a
