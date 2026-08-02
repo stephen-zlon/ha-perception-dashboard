@@ -195,6 +195,29 @@ Perception:
         --paper-input-container-focus-color: #ffffff;
         --paper-input-container-input-color: rgba(255, 255, 255, 0.92);
       }
+      /* Custom-property overrides above only apply if the component's own
+         stylesheet reads them. ha-textfield's actual <input> is a rewritten
+         Lit template that exposes its input as a CSS Shadow Part instead
+         (`<input part="input" class="control">`), so it doesn't necessarily
+         consume --mdc-text-field-*. ::part() pierces the shadow root
+         directly regardless of what the internal CSS references — this is
+         the reliable fix. "*" is required (not a specific tag) since the
+         same part name is reused by several picker/field components. */
+      *::part(input),
+      *::part(textarea) {
+        color: rgba(255, 255, 255, 0.92) !important;
+        background-color: rgba(255, 255, 255, 0.10) !important;
+        caret-color: #ffffff !important;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.92) !important;
+      }
+      *::part(input)::placeholder,
+      *::part(textarea)::placeholder {
+        color: rgba(255, 255, 255, 0.45) !important;
+      }
+      *::part(label),
+      *::part(floating-label) {
+        color: rgba(255, 255, 255, 0.58) !important;
+      }
       /* --- Accessibility & performance fallbacks ---------------------------
          On devices that can't (or shouldn't) render blur, glass turns into a
          translucent fog with poor contrast. Degrade to solid dark surfaces so
